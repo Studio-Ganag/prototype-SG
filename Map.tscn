@@ -1,0 +1,78 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://Caméra.gd" type="Script" id=1]
+[ext_resource path="res://SelectionBox.gd" type="Script" id=2]
+[ext_resource path="res://Villageois.tscn" type="PackedScene" id=3]
+
+[sub_resource type="NavigationMesh" id=1]
+vertices = PoolVector3Array( -10.5746, 0.32363, -6.693, -6.97463, 0.32363, -6.693, -6.67463, 0.32363, -9.993, -10.5746, 0.32363, -12.993, -0.374635, 0.32363, -12.993, -1.27463, 0.32363, -9.993, -0.974634, 0.32363, -5.493, 10.1254, 0.32363, -5.193, 10.1254, 0.32363, -12.993, -0.374635, 0.32363, -12.993, -10.5746, 0.32363, -12.993, -6.67463, 0.32363, -9.993, -1.27463, 0.32363, -9.993, -5.77463, 1.92363, -8.793, -5.77463, 1.92363, -4.593, -2.17463, 1.92363, -4.593, -2.17463, 1.92363, -8.793, -6.67463, 0.32363, -3.393, -6.97463, 0.32363, -6.693, -10.5746, 0.32363, -6.693, -10.5746, 0.32363, 3.207, -0.374635, 0.32363, 13.107, 10.1254, 0.32363, 13.107, 10.1254, 0.32363, 3.807, -1.27463, 0.32363, -3.393, -6.67463, 0.32363, -3.393, -10.5746, 0.32363, 3.207, 10.1254, 0.32363, -5.193, -0.974634, 0.32363, -5.493, -1.27463, 0.32363, -3.393, 10.1254, 0.32363, 3.807, 10.1254, 0.32363, -5.193, -1.27463, 0.32363, -3.393, -10.5746, 0.32363, 3.207, -10.5746, 0.32363, 13.107, -0.374635, 0.32363, 13.107 )
+polygons = [ PoolIntArray( 3, 0, 2 ), PoolIntArray( 0, 1, 2 ), PoolIntArray( 8, 4, 7 ), PoolIntArray( 4, 5, 7 ), PoolIntArray( 5, 6, 7 ), PoolIntArray( 12, 9, 11 ), PoolIntArray( 9, 10, 11 ), PoolIntArray( 16, 13, 15 ), PoolIntArray( 13, 14, 15 ), PoolIntArray( 20, 17, 19 ), PoolIntArray( 17, 18, 19 ), PoolIntArray( 23, 21, 22 ), PoolIntArray( 26, 24, 25 ), PoolIntArray( 29, 27, 28 ), PoolIntArray( 35, 30, 34 ), PoolIntArray( 30, 33, 34 ), PoolIntArray( 30, 32, 33 ), PoolIntArray( 30, 31, 32 ) ]
+
+[sub_resource type="PlaneMesh" id=2]
+
+[sub_resource type="SpatialMaterial" id=3]
+albedo_color = Color( 0.129412, 0.407843, 0.0666667, 1 )
+
+[sub_resource type="ConvexPolygonShape" id=4]
+points = PoolVector3Array( 1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, -1 )
+
+[sub_resource type="CubeMesh" id=5]
+
+[sub_resource type="ConvexPolygonShape" id=6]
+points = PoolVector3Array( -1, 1, 1, 1, 1, -1, 1, 1, 1, -1, 1, -1, -1, -1, 1, 1, -1, -1, 1, -1, 1, -1, -1, -1, 1, 1, 1, -1, 1, -1, 1, 1, -1, -1, 1, 1, 1, -1, 1, -1, -1, -1, 1, -1, -1, -1, -1, 1, 1, 1, 1, -1, -1, 1, -1, 1, 1, 1, -1, 1, 1, 1, -1, -1, -1, -1, -1, 1, -1, 1, -1, -1 )
+
+[node name="Map" type="Spatial"]
+
+[node name="Caméra" type="Spatial" parent="."]
+editor/display_folded = true
+script = ExtResource( 1 )
+
+[node name="Camera" type="Camera" parent="Caméra"]
+transform = Transform( 0.999852, 1.66533e-16, 0.0171958, -0.013239, 0.638168, 0.769784, -0.0109738, -0.769897, 0.638073, 0.47366, 26.0729, 27.9521 )
+
+[node name="SelectionBox" type="Control" parent="Caméra"]
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 2 )
+
+[node name="Navigation" type="Navigation" parent="."]
+
+[node name="NavigationMeshInstance" type="NavigationMeshInstance" parent="Navigation"]
+transform = Transform( 2.21744, 0, 0, 0, 4.89934, 0, 0, 0, 2.16344, 0, 0.652331, -0.0215895 )
+navmesh = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Navigation/NavigationMeshInstance"]
+editor/display_folded = true
+transform = Transform( 10.9402, 0, 0, 0, 8.67398, 0, 0, 0, 13.6087, -0.234411, -0.0763702, 0.0157127 )
+mesh = SubResource( 2 )
+material/0 = SubResource( 3 )
+
+[node name="StaticBody" type="StaticBody" parent="Navigation/NavigationMeshInstance/MeshInstance"]
+
+[node name="CollisionShape" type="CollisionShape" parent="Navigation/NavigationMeshInstance/MeshInstance/StaticBody"]
+shape = SubResource( 4 )
+
+[node name="MeshInstance2" type="MeshInstance" parent="Navigation/NavigationMeshInstance"]
+editor/display_folded = true
+transform = Transform( 2.15604, 0, 0, 0, 0.66279, 0, 0, 0, 2.54338, -4.02993, 1.03118, -6.63147 )
+mesh = SubResource( 5 )
+material/0 = null
+
+[node name="StaticBody" type="StaticBody" parent="Navigation/NavigationMeshInstance/MeshInstance2"]
+
+[node name="CollisionShape" type="CollisionShape" parent="Navigation/NavigationMeshInstance/MeshInstance2/StaticBody"]
+shape = SubResource( 6 )
+
+[node name="Villageois" parent="Navigation" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.740095, 0 )
+
+[node name="Villageois2" parent="Navigation" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.77155, 0.740095, 0 )
+team = 1
+
+[node name="Villageois3" parent="Navigation" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.21967, 0.740095, 0 )
+team = 1
+
+[node name="Villageois4" parent="Navigation" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.740095, 5.05726 )
